@@ -12,11 +12,6 @@ const styles = {
   card: {
     minWidth: 275
   },
-  bullet: {
-    display: "inline-block",
-    margin: "0 2px",
-    transform: "scale(0.8)"
-  },
   title: {
     fontSize: 14
   },
@@ -44,7 +39,9 @@ class Details extends Component {
         </CardContent>
         <CardActions>
           <Link to="/">
-            <Button size="small">Back</Button>
+            <Button size="small" variant="raised">
+              Back
+            </Button>
           </Link>
         </CardActions>
       </Card>
