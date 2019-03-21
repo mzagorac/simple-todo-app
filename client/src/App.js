@@ -4,6 +4,8 @@ import { Route } from "react-router-dom";
 import TasksList from "./components/TasksList";
 import AddTask from "./components/AddTask";
 import Details from "./components/Details";
+import CircularProgress from "@material-ui/core/CircularProgress";
+import SimpleAppBar from "./components/SimpleAppBar";
 import "./App.css";
 
 import * as config from "./config/config";
@@ -12,13 +14,17 @@ import { getAll, create, remove, edit } from "./lib/libs";
 class App extends Component {
   state = {
     tasks: [],
-    status: ""
+    status: "",
+    loading: true
   };
 
   componentDidMount() {
-    getAll(config.url).then(data => {
-      this.setState({ tasks: data });
-    });
+    // Simulate latency
+    setTimeout(() => {
+      getAll(config.url).then(data => {
+        this.setState({ tasks: data, loading: !this.state.loading });
+      });
+    }, 1000);
   }
 
   createTask = async data => {
@@ -59,37 +65,42 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Route
-          exact
-          path="/"
-          render={() => {
-            return (
-              <TasksList
-                status={this.state.status}
-                tasks={
-                  !this.state.status ? this.state.tasks : this.toggleActive()
-                }
-                deleteTask={this.deleteTask}
-                toggleComplete={this.toggleComplete}
-                handleChange={this.handleChange}
-              />
-            );
-          }}
-        />
-        <Route
-          path="/add"
-          render={({ history }) => {
-            return (
-              <AddTask
-                onCreateTask={task => {
-                  this.createTask(task);
-                  history.push("/");
-                }}
-              />
-            );
-          }}
-        />
-        <Route path="/details" component={Details} />
+        <SimpleAppBar />
+        <div className="wrapper">
+          <Route
+            exact
+            path="/"
+            render={() => {
+              return this.state.loading ? (
+                <CircularProgress size={60} thickness={5} />
+              ) : (
+                <TasksList
+                  status={this.state.status}
+                  tasks={
+                    !this.state.status ? this.state.tasks : this.toggleActive()
+                  }
+                  deleteTask={this.deleteTask}
+                  toggleComplete={this.toggleComplete}
+                  handleChange={this.handleChange}
+                />
+              );
+            }}
+          />
+          <Route
+            path="/add"
+            render={({ history }) => {
+              return (
+                <AddTask
+                  onCreateTask={task => {
+                    this.createTask(task);
+                    history.push("/");
+                  }}
+                />
+              );
+            }}
+          />
+          <Route path="/details" component={Details} />
+        </div>
       </div>
     );
   }

@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import serialize from "form-serialize";
+import NavigateBefore from "@material-ui/icons/NavigateBefore";
+import { Link } from "react-router-dom";
 
 class AddTask extends Component {
   handleSubmit = e => {
@@ -13,6 +15,11 @@ class AddTask extends Component {
   render() {
     return (
       <div>
+        <Link to="/">
+          <Button variant="contained" size="large" type="submit">
+            <NavigateBefore />
+          </Button>
+        </Link>
         <form onSubmit={this.handleSubmit}>
           <TextField
             id="outlined-full-width"
@@ -30,7 +37,7 @@ class AddTask extends Component {
             }}
           />
           {/*<input type="text" name="text" autoComplete="off" />*/}
-          <Button variant="raised" size="large" type="submit">
+          <Button variant="contained" size="large" type="submit">
             Add
           </Button>
         </form>

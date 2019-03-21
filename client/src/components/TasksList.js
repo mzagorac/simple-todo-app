@@ -2,10 +2,9 @@ import React, { Component } from "react";
 import List from "@material-ui/core/List";
 import ListItem from "@material-ui/core/ListItem";
 import ListItemText from "@material-ui/core/ListItemText";
-import Fab from "@material-ui/core/Fab";
-import AddIcon from "@material-ui/icons/Add";
 import IconButton from "@material-ui/core/IconButton";
 import DeleteIcon from "@material-ui/icons/Delete";
+import Description from "@material-ui/icons/Description";
 import Checkbox from "@material-ui/core/Checkbox";
 
 import { Link, Route } from "react-router-dom";
@@ -31,22 +30,28 @@ class TasksList extends Component {
         />
         <List>
           {this.props.tasks.map(task => (
-            <div key={task._id} style={{ display: "flex" }}>
+            <div
+              key={task._id}
+              style={{ display: "flex", borderBottom: "1px solid #ccc" }}
+            >
               <Checkbox
                 checked={task.completed}
                 onClick={() => this.onEditTask(task)}
               />
               <ListItem>
-                <Link
-                  to={{
-                    pathname: "/details",
-                    state: { task }
-                  }}
-                  style={{ textDecoration: "none" }}
-                >
-                  <ListItemText primary={task.text} />
-                </Link>
+                <ListItemText primary={task.text} />
               </ListItem>
+              <Link
+                to={{
+                  pathname: "/details",
+                  state: { task }
+                }}
+                style={{ textDecoration: "none" }}
+              >
+                <IconButton aria-label="Description" color="primary">
+                  <Description />
+                </IconButton>
+              </Link>
               <IconButton
                 aria-label="Delete"
                 color="primary"
@@ -58,11 +63,6 @@ class TasksList extends Component {
             </div>
           ))}
         </List>
-        <Link to="/add">
-          <Fab color="primary">
-            <AddIcon />
-          </Fab>
-        </Link>
       </div>
     );
   }

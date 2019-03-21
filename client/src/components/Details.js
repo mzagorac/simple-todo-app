@@ -39,7 +39,7 @@ class Details extends Component {
         </CardContent>
         <CardActions>
           <Link to="/">
-            <Button size="small" variant="raised">
+            <Button size="small" variant="contained">
               Back
             </Button>
           </Link>

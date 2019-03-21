@@ -1,6 +1,12 @@
 .App {
+  /* width: 75%;
+  margin: auto; */
+}
+.wrapper {
+  margin-top: 20px;
   width: 75%;
-  margin: auto;
+  margin-right: auto;
+  margin-left: auto;
 }
 /* 
 .App-logo {
